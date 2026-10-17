@@ -285,7 +285,7 @@ function Game() {
   );
 }
 
-function Cell({ n, el, blue, red, drawn, inChain, reacting, onClick }: { n: number; el?: Element; blue: boolean; red: boolean; drawn: boolean; inChain: boolean; reacting: boolean; onClick: () => void }) {
+function Cell({ n, el, blue, red, drawn, inChain, reacting, onClick }: { n: number; el: Element | undefined; blue: boolean; red: boolean; drawn: boolean; inChain: boolean; reacting: boolean; onClick: () => void }) {
   const hitB = blue && drawn, hitR = red && drawn;
   const dual = hitB && hitR;
   const Icon = el ? EL_ICON[el] : null;

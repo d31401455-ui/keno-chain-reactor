@@ -4,7 +4,7 @@ import { evaluate } from "@/lib/keno";
 describe("keno rules", () => {
   it("ICE bridges one empty ICE cell between two hits", () => {
     const r = evaluate({ blue: [1, 3], red: [], drawn: [1, 3], elements: { 2: "ice" }, stake: 1 });
-    expect(r.chains[0].length).toBe(2);
+    expect(r.chains[0]?.length).toBe(2);
     expect(r.edges.some((e) => e.kind === "ice")).toBe(true);
   });
   it("no bridge without ICE", () => {
