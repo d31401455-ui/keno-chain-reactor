@@ -82,7 +82,7 @@ function Game() {
       const b = [...fire, ...ice];
       setBlue([...b, ...randomPicks(7 - b.length, Math.random, rest(b))]);
       // red flanks the ice bridges (the cells around each ICE) for chain potential
-      const flank = [...new Set(ice.flatMap((n) => { const [r, c] = rc(n); return [[r, c - 1], [r, c + 1], [r - 1, c], [r + 1, c]].filter(([y, x]) => y >= 0 && y < ROWS && x >= 0 && x < COLS).map(([y, x]) => y * COLS + x + 1); }))].filter((n) => !ice.includes(n));
+      const flank = [...new Set(ice.flatMap((n) => { const [r, c] = rc(n); return [[r, c - 1], [r, c + 1], [r - 1, c], [r + 1, c]].filter(([y = -1, x = -1]) => y >= 0 && y < ROWS && x >= 0 && x < COLS).map(([y = 0, x = 0]) => y * COLS + x + 1); }))].filter((n) => !ice.includes(n));
       const r = randomPicks(Math.min(5, flank.length), Math.random, flank);
       setRed([...r, ...randomPicks(7 - r.length, Math.random, rest(r))]);
     }

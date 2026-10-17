@@ -21,7 +21,7 @@ type Rng = () => number;
 function sample(count: number, rng: Rng, pool = Array.from({ length: 40 }, (_, i) => i + 1)) {
   const p = [...pool];
   const out: number[] = [];
-  while (out.length < count && p.length) out.push(p.splice(Math.floor(rng() * p.length), 1)[0]);
+  while (out.length < count && p.length) out.push(p.splice(Math.floor(rng() * p.length), 1)[0]!);
   return out;
 }
 
@@ -111,8 +111,8 @@ export function evaluate(opts: {
     const cs = comps().sort((a, b) => b.length - a.length);
     const chains = cs.filter((c) => c.length > 1);
     let p: [number, number] | null = null;
-    if (chains.length >= 2) p = nearest(chains[0], chains[1]);
-    else if (cs.length >= 2) p = nearest(cs[0], cs.slice(1).flat());
+    if (chains.length >= 2) p = nearest(chains[0]!, chains[1]!);
+    else if (cs.length >= 2) p = nearest(cs[0]!, cs.slice(1).flat());
     if (p) { link(p[0], p[1], "wild"); chaosNote = `Wild Link fused ${p[0]} ↔ ${p[1]}`; }
     else chaosNote = "Wild Link found nothing to connect";
   }
