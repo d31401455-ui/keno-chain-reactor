@@ -97,8 +97,8 @@ function Game() {
     for (const n of d) { await t(380); setDrawn((p) => [...p, n]); }
     const types: ChaosType[] = ["link", "echo", "dual"];
     const chaos: ChaosType | null =
-      force === "off" ? (Math.random() < CHAOS_CHANCE ? types[Math.floor(Math.random() * 3)] : null)
-      : force === "random" ? types[Math.floor(Math.random() * 3)] : force;
+      force === "off" ? (Math.random() < CHAOS_CHANCE ? types[Math.floor(Math.random() * 3)]! : null)
+      : force === "random" ? types[Math.floor(Math.random() * 3)]! : force;
     const res = evaluate({ blue, red, drawn: d, elements, stake, chaos });
     await t(400);
     setResult(res); setPhase("reaction");
