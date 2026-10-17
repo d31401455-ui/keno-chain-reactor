@@ -43,6 +43,7 @@ function Game() {
   const [drawn, setDrawn] = useState<number[]>([]);
   const [result, setResult] = useState<Result | null>(null);
   const [turbo, setTurbo] = useState(false);
+  const [allHit, setAllHit] = useState(false);
   const [force, setForce] = useState<"off" | "random" | ChaosType>("off");
   const [history, setHistory] = useState<{ bet: number; win: number; chaos: ChaosType | null }[]>([]);
   const turboRef = useRef(turbo);
@@ -93,7 +94,13 @@ function Game() {
     setBalance((b) => b - totalBet);
     setResult(null); setDrawn([]);
     setPhase("draw");
-    const d = drawNumbers();
+    let d = drawNumbers();
+    if (allHit) {
+      // DEV: draw prefers dual picks, then the rest of the picks, then random fill
+      const dual = blue.filter((n) => red.includes(n));
+      const pref = [...new Set([...dual, ...blue, ...red])].slice(0, 10);
+      d = [...pref, ...randomPicks(10 - pref.length, Math.random, Array.from({ length: 40 }, (_, i) => i + 1).filter((n) => !pref.includes(n)))];
+    }
     for (const n of d) { await t(380); setDrawn((p) => [...p, n]); }
     const types: ChaosType[] = ["link", "echo", "dual"];
     const chaos: ChaosType | null =
@@ -252,6 +259,10 @@ function Game() {
             <label className="flex items-center justify-between text-sm">
               <span className="flex items-center gap-2"><Gauge className="h-4 w-4" /> Turbo mode</span>
               <input type="checkbox" checked={turbo} onChange={(e) => setTurbo(e.target.checked)} className="h-4 w-4 accent-primary" />
+            </label>
+            <label className="mt-2 flex items-center justify-between text-sm">
+              <span className="flex items-center gap-2 text-fire"><Flame className="h-4 w-4" /> DEV: every pick hits</span>
+              <input type="checkbox" checked={allHit} onChange={(e) => setAllHit(e.target.checked)} className="h-4 w-4 accent-primary" />
             </label>
             <div className="mt-3 text-sm">
               <div className="mb-1 flex items-center gap-2"><Sparkles className="h-4 w-4 text-chaos" /> Force Chaos Ball</div>
