@@ -51,6 +51,15 @@
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
+  --color-neon-blue: var(--neon-blue);
+  --color-neon-red: var(--neon-red);
+  --color-neon-fuse: var(--neon-fuse);
+  --color-fire: var(--fire);
+  --color-ice: var(--ice);
+  --color-chaos: var(--chaos);
+  --color-cell: var(--cell);
+  --font-display: "Orbitron", sans-serif;
+  --font-sans: "Rajdhani", sans-serif;
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
@@ -132,6 +141,38 @@
   --sidebar-ring: oklch(0.551 0.027 264.364);
 }
 
+:root {
+  --background: oklch(0.13 0.03 280);
+  --foreground: oklch(0.95 0.01 280);
+  --card: oklch(0.18 0.04 280);
+  --card-foreground: oklch(0.95 0.01 280);
+  --primary: oklch(0.72 0.25 320);
+  --primary-foreground: oklch(0.13 0.03 280);
+  --secondary: oklch(0.24 0.05 280);
+  --secondary-foreground: oklch(0.95 0.01 280);
+  --muted: oklch(0.22 0.04 280);
+  --muted-foreground: oklch(0.68 0.04 280);
+  --accent: oklch(0.28 0.06 290);
+  --accent-foreground: oklch(0.95 0.01 280);
+  --border: oklch(0.32 0.06 285);
+  --input: oklch(0.32 0.06 285);
+  --neon-blue: oklch(0.72 0.19 240);
+  --neon-red: oklch(0.66 0.25 18);
+  --neon-fuse: oklch(0.7 0.28 315);
+  --fire: oklch(0.75 0.2 55);
+  --ice: oklch(0.88 0.12 205);
+  --chaos: oklch(0.88 0.22 130);
+  --cell: oklch(0.2 0.045 280);
+}
+
+@keyframes pop { 0% { transform: scale(.6); opacity: 0 } 60% { transform: scale(1.15) } 100% { transform: scale(1); opacity: 1 } }
+@keyframes arc { from { stroke-dashoffset: 400 } to { stroke-dashoffset: 0 } }
+@keyframes flicker { 0%,100% { opacity: 1 } 50% { opacity: .55 } }
+@keyframes zoomin { 0% { transform: scale(.3) rotate(-8deg); opacity: 0 } 70% { transform: scale(1.1) } 100% { transform: scale(1); opacity: 1 } }
+@utility animate-pop { animation: pop .35s ease-out both; }
+@utility animate-arc { stroke-dasharray: 400; animation: arc .7s ease-out both, flicker .25s linear infinite .7s; }
+@utility animate-zoomin { animation: zoomin .6s cubic-bezier(.2,1.4,.4,1) both; }
+
 @layer base {
   * {
     border-color: var(--color-border);
@@ -140,5 +181,8 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: var(--font-sans);
+    background-image: radial-gradient(ellipse at top, color-mix(in oklab, var(--neon-fuse) 18%, transparent), transparent 60%), radial-gradient(ellipse at bottom left, color-mix(in oklab, var(--neon-blue) 12%, transparent), transparent 50%);
+    min-height: 100vh;
   }
 }
